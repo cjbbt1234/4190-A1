@@ -16,4 +16,7 @@ class Node:
         self.status=2
     def changeToPflag(self):
         self.status=3
+    def getStatus(self):
+        return self.status
+    
 
