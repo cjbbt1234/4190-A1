@@ -31,13 +31,13 @@ def printField(array):
     a=len(array)
     b=len(array[0])
     # print(a,b)
-    print('-'*2*b)
+    print('+'+'-+'*(b))
     for x in array:
         row='|'
         for y in x:
             row=row+str(y)+'|'
         print(row)
-        print('-'*b*2)
+        print('+'+'-+'*(b))
 
 temp=createField(5,5)
 counter=1
