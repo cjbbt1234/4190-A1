@@ -34,7 +34,7 @@ solution=StarList(length*limit)
 def backTrace(sol,r):
     sol=StarList(sol)
     # if sol.getSize()==sol.getCount():
-    if sol.neighborCheck()^sol.blockCheck()^sol.colCheck()^sol.rowCheck():
+    if sol.neighborCheck() and sol.blockCheck() and sol.colCheck() and sol.rowCheck():
         return sol
     else:
         rowNum=list(range(r*length,r*length+length))

@@ -16,7 +16,10 @@ def createField (col,row):
 #         [13,18,19,20,25]]
 
 #blocks=Read.getBlock('10x10 puzzle-1.txt')
-blocks=Read.getBlock('8x8 p1.txt')
+# blocks=Read.getBlock('8x8 p1.txt')
+blocks=Read.getBlock('14x14 p1.txt')
+
+length=Read.getLength(Read.getSize(blocks))
 
 def fillBlock(blcokNum,cells,array):
     a=len(array)
@@ -38,13 +41,15 @@ def printField(array):
     for x in array:
         row='|'
         for y in x:
-            if y==10:
-                y=0
+            if y>=10:
+                y=hex(y)
+                y=str(y)[len(str(y))-1]
+
             row=row+str(y)+'|'
         print(row)
         print('+'+'-+'*(b))
 
-temp=createField(8,8)
+temp=createField(length,length)
 counter=1
 for i in blocks:
     fillBlock(counter,i,temp)
