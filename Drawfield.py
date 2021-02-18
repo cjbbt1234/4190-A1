@@ -15,8 +15,8 @@ def createField (col,row):
 #         [11,12,16,17,21,22,23,24],
 #         [13,18,19,20,25]]
 
-blocks=Read.getBlock('10x10 puzzle-1.txt')
-#blocks=Read.getBlock('8x8 p1.txt')
+#blocks=Read.getBlock('10x10 puzzle-1.txt')
+blocks=Read.getBlock('8x8 p1.txt')
 
 def fillBlock(blcokNum,cells,array):
     a=len(array)
@@ -44,7 +44,7 @@ def printField(array):
         print(row)
         print('+'+'-+'*(b))
 
-temp=createField(10,10)
+temp=createField(8,8)
 counter=1
 for i in blocks:
     fillBlock(counter,i,temp)
