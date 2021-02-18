@@ -16,6 +16,7 @@ def createField (col,row):
 #         [13,18,19,20,25]]
 
 blocks=Read.getBlock('10x10 puzzle-1.txt')
+#blocks=Read.getBlock('8x8 p1.txt')
 
 def fillBlock(blcokNum,cells,array):
     a=len(array)
