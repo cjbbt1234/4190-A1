@@ -1,4 +1,5 @@
 from array import *
+import Read
 def createField (col,row):
     arr=[]
     for i in range(col):
@@ -8,12 +9,13 @@ def createField (col,row):
         arr.append(col)
     return arr
 
-blocks=[[1,2,3,6,7,8],
-        [4,5,10],
-        [9,14,15],
-        [11,12,16,17,21,22,23,24],
-        [13,18,19,20,25]]
+# blocks=[[1,2,3,6,7,8],
+#         [4,5,10],
+#         [9,14,15],
+#         [11,12,16,17,21,22,23,24],
+#         [13,18,19,20,25]]
 
+blocks=Read.getBlock('10x10 puzzle-1.txt')
 
 def fillBlock(blcokNum,cells,array):
     a=len(array)
@@ -35,11 +37,13 @@ def printField(array):
     for x in array:
         row='|'
         for y in x:
+            if y==10:
+                y=0
             row=row+str(y)+'|'
         print(row)
         print('+'+'-+'*(b))
 
-temp=createField(5,5)
+temp=createField(10,10)
 counter=1
 for i in blocks:
     fillBlock(counter,i,temp)
