@@ -104,9 +104,6 @@ class StarList:
             counter[i.getBlock()-1]=counter[i.getBlock()-1]+1
             if(counter[i.getBlock()-1]>limit):
                 return False
-        for i in counter:
-            if(i>limit):
-                return False
         return True
 
 
