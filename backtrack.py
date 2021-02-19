@@ -53,6 +53,8 @@ def backTrace(sol,r):
             blockB=searchBlockNum(blocks,b)
             sol.setStar(indexA,a,blockA)
             sol.setStar(indexB,b,blockB)
+            if i==(51,59):
+                aaa=1
             if sol.localCheckAll(limit):
                 result=backTrace(sol,r+1)
                 if result is not None:

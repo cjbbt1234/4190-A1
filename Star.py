@@ -91,6 +91,7 @@ class StarList:
             for j in range(i,self.count):
                 b=self.list[j].getPosition()
                 if((a-b==1)|(b-a==1)|(a-b==size)|(b-a==size)|(a-b==size-1)|(b-a==size-1)|(a-b==size+1)|(b-a==size+1)):
+                    print(a,b,"false")
                     return False
         return True
 
@@ -182,25 +183,42 @@ class StarList:
         return True
 
     def localCheckAll(self,limit):
+        print("-----------------------------------------------------------")
+        if not self.localNeighborCheck():
+            print("self.localNeighborCheck() false")
+        if not self.localBlockCheck(limit):
+            print("self.localBlockCheck(limit) false")
+        if not self.localColCheck(limit):
+            print("self.localColCheck(limit) false")
+        if not self.localRowCheck(limit):
+            print("self.localRowCheck(limit) false")
         return self.localNeighborCheck() and self.localBlockCheck(limit) and self.localColCheck(limit) and self.localRowCheck(limit)
 
 
-# a=StarList(5)
-# # a.addStar(Star(7,1))
-# # a.addStar(Star(4,2))
-# # a.addStar(Star(15,3))
-# # a.addStar(Star(18,4))
-# # a.addStar(Star(21,5))
-# a.setStar(0,7,1)
-# a.setStar(1,4,2)
-# a.setStar(2,15,3)
-# a.setStar(3,18,4)
-# a.setStar(4,21,5)
-# print(a.count)
-# print(a.localNeighborCheck())
-# print(a.localBlockCheck(1))
-# print(a.localRowCheck(1),a.localColCheck(1))
-# print(a.neighborCheck())
-# print(a.blockCheck(1))
-# print(a.rowCheck(1),a.colCheck(1))
+a=StarList(20)
+# a.addStar(Star(2,0))
+# a.addStar(Star(8,1))
+# a.addStar(Star(16,0))
+# a.addStar(Star(20,9))
+# a.addStar(Star(22,2))
+# a.addStar(Star(24,2))
+# a.addStar(Star(37,1))
+# a.addStar(Star(40,9))
+a.setStar(0,2,0)
+a.setStar(1,8,1)
+a.setStar(2,16,0)
+a.setStar(3,20,9)
+a.setStar(4,22,2)
+a.setStar(5,24,2)
+a.setStar(6,37,1)
+a.setStar(7,40,9)
+a.setStar(8,43,3)
+a.setStar(9,45,4)
+print(a.count)
+print(a.localNeighborCheck())
+print(a.localBlockCheck(2))
+print(a.localRowCheck(2),a.localColCheck(2))
+print(a.neighborCheck())
+print(a.blockCheck(2))
+print(a.rowCheck(2),a.colCheck(2))
 
