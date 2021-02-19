@@ -1,6 +1,5 @@
 from itertools import combinations
 import Read
-import numpy
 import Star
 from Star import StarList
 import Drawfield
@@ -28,29 +27,26 @@ def searchBlockNum(b,p):
 
 solution=StarList(length*limit)
 
-def genCandidate():
-    cand=list(combinations(range(1,length+1),limit))
-    # print(len(cand))
-    for i in cand:
-        if abs(i[0]-i[1])==1:
-            cand.remove(i)
-    # print(len(cand))
-    return cand
+# def genCandidate():
+#     cand=list(combinations(range(1,length+1),limit))
+#     # print(len(cand))
+#     for i in cand:
+#         if abs(i[0]-i[1])==1:
+#             cand.remove(i)
+#     # print(len(cand))
+#     return cand
 
 
 def backTrace(sol,r):
-    candidate=genCandidate()
     if sol.getSize()==sol.getCount():
         return sol
     else:
-        # numInRow=list(range(r*length+1,r*length+length+1))
-        # candidate=list(combinations(numInRow,limit))
+        numInRow=list(range(r*length+1,r*length+length+1))
+        candidate=list(combinations(numInRow,limit))
         for i in candidate:
             indexA=r*limit
             indexB=r*limit+1
             (a,b)=i
-            a+=r*length
-            b+=r*length
             if(abs(a-b)==1):
                 continue
             blockA=searchBlockNum(blocks,a)
