@@ -6,8 +6,8 @@ import Drawfield
 
 
 limit=2
-fileName='10x10 puzzle-1.txt'
-# fileName='14x14 p1.txt'
+# fileName='10x10 puzzle-1.txt'
+fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 blocks=Read.getBlock(fileName)
@@ -58,10 +58,9 @@ def backTrace(sol,r):
     return None
 
 def forward_checking(sol,r):
-    sol=StarList(sol)
     numInRow=list(range(r*length+1,r*length+length+1))
-    last_assign_1 = sol.getStar(2*(r-1))
-    last_assign_2 = sol.getStar(2*r-1)
+    last_assign_1 = sol.getStar(2*(r-1)).getPosition()
+    last_assign_2 = sol.getStar(2*r-1).getPosition()
     for i in [-1, 0, 1]:#check row
         if last_assign_1+i+length in numInRow:
             numInRow.remove(last_assign_1+i+length)
@@ -73,7 +72,7 @@ def backTracewithForward(sol,r):
     if sol.getSize()==sol.getCount():
         return sol
     else:
-        candidate=forward_checking(sol,r)
+        candidate=list(combinations( forward_checking(sol,r), limit))
         for i in candidate:
             indexA=r*limit
             indexB=r*limit+1
@@ -142,6 +141,21 @@ import timeit
 start = timeit.default_timer()
 
 backTracewithForward(solution,0)
+
+if(solution.getCount()!=solution.getSize()):
+    print("No solution")
+else:
+    print(solution)
+
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)
+print('-----------------------------------')
+
+solution=StarList(length*limit)
+start = timeit.default_timer()
+
+backTrace(solution,0)
 
 if(solution.getCount()!=solution.getSize()):
     print("No solution")
