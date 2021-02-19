@@ -12,8 +12,11 @@ limit=2
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
-fileName = '10x10 p3.txt'
-# fileName='10x10;2;32;18.txt'
+# fileName = '10x10 p2.txt'
+# fileName='10x10 p3.txt'
+fileName='10x10;2;32;18.txt'
+
+
 blocks=Read.getBlock(fileName)
 print(blocks)
 # Drawfield.drawGUI(blocks,[1])
@@ -176,7 +179,7 @@ stop = timeit.default_timer()
 
 print('Time: ', stop - start)
 print('-----------------------------------')
-Drawfield.drawGUI(blocks,solution.getSolutionList())
+# Drawfield.drawGUI(blocks,solution.getSolutionList())
 
 solution=StarList(length*limit)
 start = timeit.default_timer()
