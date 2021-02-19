@@ -57,6 +57,41 @@ def backTrace(sol,r):
             sol.resetStar(indexB)
     return None
 
+def forward_checking(sol,r):
+    sol=StarList(sol)
+    numInRow=list(range(r*length+1,r*length+length+1))
+    last_assign_1 = sol.getStar(2*(r-1))
+    last_assign_2 = sol.getStar(2*r-1)
+    for i in [-1, 0, 1]:#check row
+        if last_assign_1+i+length in numInRow:
+            numInRow.remove(last_assign_1+i+length)
+        if last_assign_2+i+length in numInRow:
+            numInRow.remove(last_assign_2+i+length)
+    return numInRow
+
+def backTracewithForward(sol,r):
+    if sol.getSize()==sol.getCount():
+        return sol
+    else:
+        candidate=forward_checking(sol,r)
+        for i in candidate:
+            indexA=r*limit
+            indexB=r*limit+1
+            (a,b)=i
+            if(abs(a-b)==1):
+                continue
+            blockA=searchBlockNum(blocks,a)
+            blockB=searchBlockNum(blocks,b)
+            sol.setStar(indexA,a,blockA)
+            sol.setStar(indexB,b,blockB)
+            if sol.localCheckAll(limit):
+                result=backTrace(sol,r+1)
+                if result is not None:
+                    return result
+            sol.resetStar(indexA)
+            sol.resetStar(indexB)
+    return None
+
 
 # def backTrace(sol,r):
 #     # sol=StarList(sol)
@@ -98,17 +133,29 @@ def backTrace(sol,r):
 #             sol.resetStar(indexOne)
 #             # print('immmmmmmm')
 #             sol.resetStar(indexTwo)
-import time
 
-tic=time.perf_counter()
-backTrace(solution,0)
+
+
+
+import timeit
+
+start = timeit.default_timer()
+
+backTracewithForward(solution,0)
+
 if(solution.getCount()!=solution.getSize()):
     print("No solution")
 else:
     print(solution)
-# print('end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program ')
-toc=time.perf_counter()
-print(f"Downloaded the tutorial in {toc - tic:0.4f} seconds")
+
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)
+
+
+
+
+
 
 
 
