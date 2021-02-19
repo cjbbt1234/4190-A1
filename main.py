@@ -10,20 +10,14 @@ import Drawfield
 # a=list(combinations(p,2))
 # print(a)
 
-print('--------------------------------')
-
 limit=2
-fileName='10x10 puzzle-1.txt'
-fileName='8x8 p1.txt'
+# fileName='10x10 puzzle-1.txt'
+fileName='14x14 p1.txt'
+# fileName='8x8 p1.txt'
 blocks=Read.getBlock(fileName)
 size=Read.getSize(blocks)
 length=Read.getLength(size)
-print('details:------------------------')
-# print(blocks)
-print(size,length)
-print('end---------------------------------')
-# for r in range(length):
-#     print(list(range(r*length,r*length+length)))
+
 
 def searchBlockNum(b,p):
     for i in range(len(b)):
@@ -43,17 +37,19 @@ def backTrace(sol,r):
             indexA=r*limit
             indexB=r*limit+1
             (a,b)=i
+            if(abs(a-b)==1):
+                continue
             blockA=searchBlockNum(blocks,a)
             blockB=searchBlockNum(blocks,b)
             sol.setStar(indexA,a,blockA)
             sol.setStar(indexB,b,blockB)
             if sol.localCheckAll(limit):
-                print('pass + ',r)
-                sol=backTrace(sol,r+1)
-                return sol
-            else:
-                sol.resetStar(indexA)
-                sol.resetStar(indexB)
+                result=backTrace(sol,r+1)
+                if result is not None:
+                    return result
+            sol.resetStar(indexA)
+            sol.resetStar(indexB)
+    return None
 
 
 # def backTrace(sol,r):

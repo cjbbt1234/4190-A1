@@ -179,6 +179,7 @@ class StarList:
     def localCheckAll(self,limit):
         return self.localNeighborCheck() and self.localBlockCheck(limit) and self.localColCheck(limit) and self.localRowCheck(limit)
 
+
 # a=StarList(5)
 # # a.addStar(Star(7,1))
 # # a.addStar(Star(4,2))
