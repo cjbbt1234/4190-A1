@@ -43,13 +43,21 @@ class StarList:
         for i in range(size):
             self.list.append(Star())
         self.count=0
+
+    def __str__(self):
+        a=[]
+        for i in self.list:
+            a.append('('+str(i)+')')
+        return str(a)
+
+
     def setStar(self,index,p,b):
         temp=self.list[index]
         temp.setPosition(p)
         temp.setBlock(b)
         self.count=self.count+1
     def resetStar(self,index):
-        temp=Star(self.list[index])
+        temp=self.list[index]
         temp.setBlock(-1)
         temp.setPosition(-1)
         self.count=self.count-1
@@ -101,6 +109,7 @@ class StarList:
         for i in range(size):
             counter.append(0)
         for i in self.list[0:self.count]:
+            # print(i)
             counter[i.getBlock()-1]=counter[i.getBlock()-1]+1
             if(counter[i.getBlock()-1]>limit):
                 return False
@@ -167,22 +176,25 @@ class StarList:
                 return False
         return True
 
-a=StarList(5)
-# a.addStar(Star(7,1))
-# a.addStar(Star(4,2))
-# a.addStar(Star(15,3))
-# a.addStar(Star(18,4))
-# a.addStar(Star(21,5))
-a.setStar(0,7,1)
-a.setStar(1,4,2)
-a.setStar(2,15,3)
-a.setStar(3,18,4)
-a.setStar(4,21,5)
-print(a.count)
-print(a.localNeighborCheck())
-print(a.localBlockCheck(1))
-print(a.localRowCheck(1),a.localColCheck(1))
-print(a.neighborCheck())
-print(a.blockCheck(1))
-print(a.rowCheck(1),a.colCheck(1))
+    def localCheckAll(self,limit):
+        return self.localNeighborCheck() and self.localBlockCheck(limit) and self.localColCheck(limit) and self.localRowCheck(limit)
+
+# a=StarList(5)
+# # a.addStar(Star(7,1))
+# # a.addStar(Star(4,2))
+# # a.addStar(Star(15,3))
+# # a.addStar(Star(18,4))
+# # a.addStar(Star(21,5))
+# a.setStar(0,7,1)
+# a.setStar(1,4,2)
+# a.setStar(2,15,3)
+# a.setStar(3,18,4)
+# a.setStar(4,21,5)
+# print(a.count)
+# print(a.localNeighborCheck())
+# print(a.localBlockCheck(1))
+# print(a.localRowCheck(1),a.localColCheck(1))
+# print(a.neighborCheck())
+# print(a.blockCheck(1))
+# print(a.rowCheck(1),a.colCheck(1))
 

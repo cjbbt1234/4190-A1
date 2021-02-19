@@ -54,5 +54,5 @@ counter=1
 for i in blocks:
     fillBlock(counter,i,temp)
     counter=counter+1
-printField(temp)
+# printField(temp)
 # https://python-reference.readthedocs.io/en/latest/docs/brackets/indexing.html

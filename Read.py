@@ -20,9 +20,9 @@ def getSize(a):
 def getLength(size):
     return int(math.sqrt(size))
 
-print(getBlock('14x14 p1.txt'))
+# print(getBlock('14x14 p1.txt'))
 
 
-print(getLength(getSize(getBlock('14x14 p1.txt'))))
-print(getLength(getSize(getBlock('10x10 puzzle-1.txt'))))
+# print(getLength(getSize(getBlock('14x14 p1.txt'))))
+# print(getLength(getSize(getBlock('10x10 puzzle-1.txt'))))
 
