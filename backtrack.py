@@ -11,6 +11,7 @@ fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 blocks=Read.getBlock(fileName)
+print(blocks)
 size=Read.getSize(blocks)
 length=Read.getLength(size)
 
@@ -59,6 +60,8 @@ def backTrace(sol,r):
 
 def forward_checking(sol,r):
     numInRow=list(range(r*length+1,r*length+length+1))
+    if r==0:
+        return numInRow
     last_assign_1 = sol.getStar(2*(r-1)).getPosition()
     last_assign_2 = sol.getStar(2*r-1).getPosition()
     for i in [-1, 0, 1]:#check row
@@ -66,6 +69,21 @@ def forward_checking(sol,r):
             numInRow.remove(last_assign_1+i+length)
         if last_assign_2+i+length in numInRow:
             numInRow.remove(last_assign_2+i+length)
+    # column check
+    current=sol.getCount()
+    for i in range(current-1):
+        for j in range(i+1,current):
+            pOne=sol.getStar(i).getPosition()
+            pTwo=sol.getStar(j).getPosition()
+            bOne=sol.getStar(i).getBlock()
+            bTwo=sol.getStar(j).getBlock()
+            if (pOne%length == pTwo%length):
+                numInRow.remove((pOne%length)+r*length)
+            if(bOne==bTwo):
+                blockIndex=bOne-1
+                for cell in blocks[blockIndex]:
+                    # if cell in numInRow:
+                    numInRow.remove(cell)
     return numInRow
 
 def backTracewithForward(sol,r):
