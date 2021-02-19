@@ -81,7 +81,11 @@ class StarList:
             a=self.list[i].getPosition()
             for j in range(i,len(self.list)):
                 b=self.list[j].getPosition()
-                if((a-b==1)|(b-a==1)|(a-b==size)|(b-a==size)|(a-b==size-1)|(b-a==size-1)|(a-b==size+1)|(b-a==size+1)):
+                # if((a-b==1)|(b-a==1)|(a-b==size)|(b-a==size)|(a-b==size-1)|(b-a==size-1)|(a-b==size+1)|(b-a==size+1)):
+                #     return False
+                (x1,y1)=(int( (a-1)/size ),(a-1)%size)
+                (x2,y2)=(int( (b-1)/size ),(b-1)%size)
+                if(abs(x1-x2)+abs(y1-y2)==1 or abs(x1-x2)+abs(y1-y2)==2):
                     return False
         return True
     def localNeighborCheck(self):
@@ -90,8 +94,13 @@ class StarList:
             a=self.list[i].getPosition()
             for j in range(i,self.count):
                 b=self.list[j].getPosition()
-                if((a-b==1)|(b-a==1)|(a-b==size)|(b-a==size)|(a-b==size-1)|(b-a==size-1)|(a-b==size+1)|(b-a==size+1)):
-                    print(a,b,"false")
+                # if((a-b==1)|(b-a==1)|(a-b==size)|(b-a==size)|(a-b==size-1)|(b-a==size-1)|(a-b==size+1)|(b-a==size+1)):
+                #     # print(a,b,"false")
+                #     return False
+                (x1,y1)=(int( (a-1)/size ),(a-1)%size)
+                (x2,y2)=(int( (b-1)/size ),(b-1)%size)
+                if(abs(x1-x2)+abs(y1-y2)==1 or (abs(x1-x2)==1 and abs(y1-y2)==1)):
+                    # print(a,b,'problem')
                     return False
         return True
 
@@ -183,18 +192,30 @@ class StarList:
         return True
 
     def localCheckAll(self,limit):
-        print("-----------------------------------------------------------")
-        if not self.localNeighborCheck():
-            print("self.localNeighborCheck() false")
-        if not self.localBlockCheck(limit):
-            print("self.localBlockCheck(limit) false")
-        if not self.localColCheck(limit):
-            print("self.localColCheck(limit) false")
-        if not self.localRowCheck(limit):
-            print("self.localRowCheck(limit) false")
+        # print("-----------------------------------------------------------")
+        # if not self.localNeighborCheck():
+        #     print("self.localNeighborCheck() false")
+        # if not self.localBlockCheck(limit):
+        #     print("self.localBlockCheck(limit) false")
+        # if not self.localColCheck(limit):
+        #     print("self.localColCheck(limit) false")
+        # if not self.localRowCheck(limit):
+        #     print("self.localRowCheck(limit) false")
         return self.localNeighborCheck() and self.localBlockCheck(limit) and self.localColCheck(limit) and self.localRowCheck(limit)
 
+def extendedArray(size):
+    s=size+2
+    array=[]
+    for i in range(s):
+        subA=[]
+        for j in range(s):
 
+            if(i!=0 and j!=0 and i!=s-1 and j!=s-1):
+                subA.append(str((i-1)*size+j).zfill(2))
+            else:
+                subA.append('00')
+        print(subA)
+extendedArray(10)
 a=StarList(20)
 # a.addStar(Star(2,0))
 # a.addStar(Star(8,1))
@@ -221,4 +242,6 @@ print(a.localRowCheck(2),a.localColCheck(2))
 print(a.neighborCheck())
 print(a.blockCheck(2))
 print(a.rowCheck(2),a.colCheck(2))
+
+
 

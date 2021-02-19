@@ -6,12 +6,14 @@ import Drawfield
 
 
 limit=2
+
 # fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
 fileName = '10x10 p3.txt'
+# fileName='10x10;2;32;18.txt'
 blocks=Read.getBlock(fileName)
 print(blocks)
 # Drawfield.drawGUI(blocks,[1])
@@ -174,20 +176,21 @@ stop = timeit.default_timer()
 
 print('Time: ', stop - start)
 print('-----------------------------------')
+Drawfield.drawGUI(blocks,solution.getSolutionList())
 
-# solution=StarList(length*limit)
-# start = timeit.default_timer()
-#
-# backTrace(solution,0)
-#
-# if(solution.getCount()!=solution.getSize()):
-#     print("No solution")
-# else:
-#     print(solution.getSolutionList())
-#
-# stop = timeit.default_timer()
-#
-# print('Time: ', stop - start)
+solution=StarList(length*limit)
+start = timeit.default_timer()
+
+backTrace(solution,0)
+
+if(solution.getCount()!=solution.getSize()):
+    print("No solution")
+else:
+    print(solution.getSolutionList())
+
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)
 #
 # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
