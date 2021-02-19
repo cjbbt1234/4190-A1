@@ -3,17 +3,13 @@ import Read
 import Star
 from Star import StarList
 import Drawfield
-# print("Hello world")
-# p=list(range(0+1,5+1))
-# print(p)
-# print(list(combinations(p,2)))
-# a=list(combinations(p,2))
-# print(a)
+
 
 limit=2
 fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
+# fileName = '10x10 non-solution.txt'
 blocks=Read.getBlock(fileName)
 size=Read.getSize(blocks)
 length=Read.getLength(size)
@@ -106,7 +102,10 @@ import time
 
 tic=time.perf_counter()
 backTrace(solution,0)
-print(solution)
+if(solution.getCount()!=solution.getSize()):
+    print("No solution")
+else:
+    print(solution)
 # print('end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program ')
 toc=time.perf_counter()
 print(f"Downloaded the tutorial in {toc - tic:0.4f} seconds")
