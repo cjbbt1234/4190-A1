@@ -50,6 +50,11 @@ class StarList:
             a.append('('+str(i)+')')
         return str(a)
 
+    def getSolutionList(self):
+        result=[]
+        for s in self.list:
+            result.append(s.getPosition())
+        return result
 
     def setStar(self,index,p,b):
         temp=self.list[index]

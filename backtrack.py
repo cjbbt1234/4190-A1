@@ -6,12 +6,13 @@ import Drawfield
 
 
 limit=2
-# fileName='10x10 puzzle-1.txt'
-fileName='14x14 p1.txt'
-# fileName='8x8 p1.txt'
+fileName='10x10 puzzle-1.txt'
+# fileName='14x14 p1.txt'
+fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 blocks=Read.getBlock(fileName)
 print(blocks)
+# Drawfield.drawGUI(blocks,[1])
 size=Read.getSize(blocks)
 length=Read.getLength(size)
 
@@ -82,8 +83,8 @@ def forward_checking(sol,r):
             if(bOne==bTwo):
                 blockIndex=bOne-1
                 for cell in blocks[blockIndex]:
-                    # if cell in numInRow:
-                    numInRow.remove(cell)
+                    if cell in numInRow:
+                        numInRow.remove(cell)
     return numInRow
 
 def backTracewithForward(sol,r):
@@ -163,7 +164,7 @@ backTracewithForward(solution,0)
 if(solution.getCount()!=solution.getSize()):
     print("No solution")
 else:
-    print(solution)
+    print(solution.getSolutionList())
 
 stop = timeit.default_timer()
 
@@ -178,11 +179,13 @@ backTrace(solution,0)
 if(solution.getCount()!=solution.getSize()):
     print("No solution")
 else:
-    print(solution)
+    print(solution.getSolutionList())
 
 stop = timeit.default_timer()
 
 print('Time: ', stop - start)
+
+Drawfield.drawGUI(blocks,solution.getSolutionList())
 
 
 
