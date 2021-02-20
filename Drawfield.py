@@ -79,6 +79,8 @@ for i in blocks:
 from tkinter import *
 COLORS=['honeydew4', 'LightBlue4', 'LightGoldenrod2', 'LavenderBlush4', 'gray74', 'AntiqueWhite4', 'gray64', 'yellow green', 'gray71', 'orange', 'maroon3', 'SteelBlue2', 'gray30', 'maroon2', 'SlateGray2', 'chocolate3']
 COLORS=['LightCyan2', 'medium violet red', 'burlywood1', 'old lace', 'tan2', 'LightBlue3', 'firebrick2', 'green2', 'gray34', 'dodger blue', 'steel blue', 'gray6', 'DarkOrange2', 'turquoise1', 'gray38', 'LemonChiffon4']
+COLORS=['floral white', 'brown1', 'LightCyan3', 'indian red', 'SlateBlue3', 'wheat4', 'dark turquoise', 'LightGoldenrod2', 'tan2', 'RoyalBlue4', 'tomato3', 'LightYellow3', 'gray57', 'khaki4', 'gray53', 'orange red']
+
 # window=Tk()
 # window.title("StarBattle")
 # window.geometry('1280x720')
