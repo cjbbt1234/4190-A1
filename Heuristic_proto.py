@@ -9,14 +9,14 @@ import random
 limit=2
 
 fileName='10x10 puzzle-1.txt'
-fileName='14x14 p1.txt'
+# fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
 # fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
-fileName='12x12 p1.txt'
+# fileName='12x12 p1.txt'
 # fileName = "14x14 p2.txt"
 
 blocks=Read.getBlock(fileName)
@@ -337,6 +337,13 @@ def sortCandidate(candidate,block,length,r):
                     break
         candidateSortList.append( (can,countAllBlock-countInBlock) )
     sortedCand=sorted(candidateSortList,key=lambda x:x[1])
+    for i in range(len(sortedCand)-1):
+        j=i+1
+        if sortedCand[i][1]==sortedCand[j][1]:
+            if random.random()>0.5:
+                temp=sortedCand[i]
+                sortedCand[i]=sortedCand[j]
+                sortedCand[j]=temp
     result=[]
     for i in sortedCand:
         result.append(i[0])
