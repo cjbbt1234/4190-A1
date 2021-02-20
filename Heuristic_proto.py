@@ -8,15 +8,15 @@ import random
 
 limit=2
 
-# fileName='10x10 puzzle-1.txt'
-# fileName='14x14 p1.txt'
-fileName='8x8 p1.txt'
+fileName='10x10 puzzle-1.txt'
+fileName='14x14 p1.txt'
+# fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
 # fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
-fileName='10x10;2;32;18.txt'
-# fileName='12x12 p1.txt'
+# fileName='10x10;2;32;18.txt'
+fileName='12x12 p1.txt'
 # fileName = "14x14 p2.txt"
 
 blocks=Read.getBlock(fileName)
@@ -245,6 +245,32 @@ def backTraceWithH2(sol,r,block):
         for i in range(len(block[r])):
             for j in range(i+1,len(block[r])):
                 candidate.append( (block[r][i],block[r][j]) )
+        candidate=sortCandidate(candidate,block,length,r)
+        for i in candidate:
+            indexA=r*limit
+            indexB=r*limit+1
+            (a,b)=i
+            blockA=searchBlockNum(block,a)
+            blockB=searchBlockNum(block,b)
+            sol.setStar(indexA,a,blockA)
+            sol.setStar(indexB,b,blockB)
+            if sol.localCheckAll(limit):
+                tempCopy=deepcopy2d(block)
+                removeNeighbor(a,tempCopy,length)
+                removeNeighbor(b,tempCopy,length)
+                removeColandRow(sol,tempCopy,length)
+                if checkRemainDomain(sol,tempCopy):
+                    temp=backTraceWithH2(sol,r+1,tempCopy)
+                    if temp is not None:
+                        result=temp
+                        break
+            sol.resetStar(indexA)
+            sol.resetStar(indexB)
+    return result
+
+def backTraceHybrid(sol,r,block):
+    # Hybrid of H1 and H2
+    pass
 
 
 def getNeighbor(p,length):
@@ -282,12 +308,11 @@ def getNeighbor(p,length):
 
 
 def sortCandidate(candidate,block,length,r):
-    candidateSortlist=[]
-    for c in candidate:
-        (x,y)=c
-        row={}
-        col={}
-        neig={}
+    candidateSortList=[]
+    for can in candidate:
+        (x,y)=can
+        row=set()
+        col=set()
         #if same row:
         if  int((x-1)/length)==int((y-1)/length):
             r=int((x-1)/length)
@@ -297,6 +322,28 @@ def sortCandidate(candidate,block,length,r):
             c=(x-1)%length
             col=set(range(c+1,length*length+1,length))
         #get all neighbor of x and y
+        neighborX=set(getNeighbor(x,length))
+        neighborY=set(getNeighbor(y,length))
+        u=row.union(col).union(neighborX).union(neighborY)
+        all=list(u)
+        countInBlock=0
+        countAllBlock=0
+        for i in all:
+            if i in block[r]:
+                countInBlock+=1
+            for j in block:
+                if i in j:
+                    countAllBlock+=1
+                    break
+        candidateSortList.append( (can,countAllBlock-countInBlock) )
+    sortedCand=sorted(candidateSortList,key=lambda x:x[1])
+    result=[]
+    for i in sortedCand:
+        result.append(i[0])
+    return result
+
+
+
 
 
 
@@ -305,7 +352,7 @@ def main():
     solution=StarList(length*limit)
 
     start=timeit.default_timer()
-    backTraceWithH1(solution,0,blocks)
+    backTraceWithH2(solution,0,blocks)
     stop=timeit.default_timer()
     print('Time cost: ',stop-start,'second')
 
@@ -323,11 +370,11 @@ def main():
 
     # # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
-# main()
-# blocks=a
 main()
-
+# blocks=a
+# main()
+#
 # print('-----------------neig test---------------')
-# l=[1,4,10,31,41,50,91,98,100]
+# l=[1,4,12,37,39,12,48,133,138,144]
 # for i in l:
-#     print(i,getNeighbor(i,10))
+#     print(i, set(getNeighbor(i,12)))
