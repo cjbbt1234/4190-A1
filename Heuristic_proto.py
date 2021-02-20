@@ -36,7 +36,6 @@ def deepCopyTest():
     return b
 
 
-
 def searchBlockNum(b,p):
     for i in range(len(b)):
         temp=b[i]
@@ -163,18 +162,12 @@ def backTraceWithForward(sol,r,block):
         for i in range(len(block[r])):
             for j in range(i+1,len(block[r])):
                 candidate.append( (block[r][i],block[r][j]) )
-
         for i in candidate:
             indexA=r*limit
             indexB=r*limit+1
             (a,b)=i
             blockA=searchBlockNum(block,a)
             blockB=searchBlockNum(block,b)
-            # if(blockA==None or blockB==None):
-            #     print(blockCopy[r])
-            #     print(candidate)
-            #     print(blockCopy,'<<<<<<<<<<<<<<<<<<<<<<<')
-            #     break
             sol.setStar(indexA,a,blockA)
             sol.setStar(indexB,b,blockB)
             if sol.localCheckAll(limit):
@@ -187,34 +180,78 @@ def backTraceWithForward(sol,r,block):
                     if temp is not None:
                         result=temp
                         break
-                # temp=backTraceWithForward(sol,r+1,tempCopy)
-                # if temp is not None:
-                #     result=temp
-                #     break
             sol.resetStar(indexA)
             sol.resetStar(indexB)
     return result
+
+def backTraceWithH1(sol,r,block):
+    result=None
+    if sol.getSize()==sol.getCount():
+        result=sol
+    else:
+        # print(blockCopy[r])
+        # candidate=list(combinations(blockCopy[r],limit))
+        minlength = 1000
+        minIndex = -1
+        for i in range(int(sol.getCount()/2),len(block)):
+            if len(block[i]) < minlength:
+                minlength = len(block[i])
+                minIndex = i
+        if r!=minIndex:
+            swapA = block[minIndex]
+            swapB = block[r]
+            block[r] = swapA
+            block[minIndex] = swapB
+        candidate=[]
+        for i in range(len(block[r])):
+            for j in range(i+1,len(block[r])):
+                candidate.append( (block[r][i],block[r][j]) )
+        for i in candidate:
+            indexA=r*limit
+            indexB=r*limit+1
+            (a,b)=i
+            blockA=searchBlockNum(block,a)
+            blockB=searchBlockNum(block,b)
+            sol.setStar(indexA,a,blockA)
+            sol.setStar(indexB,b,blockB)
+            if sol.localCheckAll(limit):
+                tempCopy=deepcopy2d(block)
+                removeNeighbor(a,tempCopy,length)
+                removeNeighbor(b,tempCopy,length)
+                removeColandRow(sol,tempCopy,length)
+                if checkRemainDomain(sol,tempCopy):
+                    temp=backTraceWithH1(sol,r+1,tempCopy)
+                    if temp is not None:
+                        result=temp
+                        break
+            sol.resetStar(indexA)
+            sol.resetStar(indexB)
+    return result
+
 
 
 def main():
     solution=StarList(length*limit)
 
     start=timeit.default_timer()
-    # backTrace(solution,0)
-    backTraceWithForward(solution,0,blocks)
+    backTraceWithH1(solution,0,blocks)
     stop=timeit.default_timer()
     print('Time cost: ',stop-start,'second')
 
     print(solution)
-    Drawfield.drawGUI(blocks,solution.getSolutionList())
-
-    # solution=StarList(length*limit)
-    # start=timeit.default_timer()
-    # backTrace(solution,0)
-    # stop=timeit.default_timer()
-    # print('Time cost: ',stop-start,'second')
     # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
+    solution=StarList(length*limit)
+    start=timeit.default_timer()
+    backTraceWithForward(solution,0,blocks)
+    stop=timeit.default_timer()
+    print('Time cost: ',stop-start,'second')
+    print(solution)
+
+
+
+    # # Drawfield.drawGUI(blocks,solution.getSolutionList())
+
 # main()
-blocks=a
+# blocks=a
 main()
