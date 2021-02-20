@@ -9,14 +9,14 @@ import random
 limit=2
 
 # fileName='10x10 puzzle-1.txt'
-# fileName='14x14 p1.txt'
+fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
 # fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
-fileName='12x12 p1.txt'
+# fileName='12x12 p1.txt'
 
 blocks=Read.getBlock(fileName)
 size=Read.getSize(blocks)
@@ -235,6 +235,69 @@ def backTraceWithH1(sol,r,block):
             sol.resetStar(indexB)
     return result
 
+def backTraceWithH2(sol,r,block):
+    result=None
+    if sol.getSize()==sol.getCount():
+        result=sol
+    else:
+        candidate=[]
+        for i in range(len(block[r])):
+            for j in range(i+1,len(block[r])):
+                candidate.append( (block[r][i],block[r][j]) )
+
+
+def getNeighbor(p,length):
+    list=None
+    up=p-length
+    down=p+length
+    right=p+1
+    left=p-1
+    upleft=p-length-1
+    upright=p-length+1
+    downleft=p+length-1
+    downright=p+length+1
+    if p==1:
+        list=[right,down,downright]
+    elif p==length:
+        list=[left,downleft,down]
+    elif p==length*length-length+1:
+        list=[up,upright,right]
+    elif p==length*length:
+        list=[left,up,upleft]
+    elif p%length==1:#left edge
+        list=[up,upright,right,down,downright]
+    elif p%length==0:#right edge
+        list=[up,upleft,left,downleft,down]
+    elif p>1 and p<length: #first row
+        list=[left,downleft,down,downright,right]
+    elif p<length*length and p>length*length-length+1:
+        list=[left,upleft,up,upright,right]
+    else:
+        list=[up,upright,upleft,left,right,down,downleft,downright]
+    return list
+
+
+
+
+
+def sortCandidate(candidate,block,length,r):
+    candidateSortlist=[]
+    for c in candidate:
+        (x,y)=c
+        row={}
+        col={}
+        neig={}
+        #if same row:
+        if  int((x-1)/length)==int((y-1)/length):
+            r=int((x-1)/length)
+            row=set(range(r*length+1,r*length+length+1))
+        #if same col
+        if (x-1)%length==(y-1)%length:
+            c=(x-1)%length
+            col=set(range(c+1,length*length+1,length))
+        #get all neighbor of x and y
+
+
 
 
 def main():
@@ -248,17 +311,22 @@ def main():
     print(solution)
     # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
-    solution=StarList(length*limit)
-    start=timeit.default_timer()
-    backTraceWithForward(solution,0,blocks)
-    stop=timeit.default_timer()
-    print('Time cost: ',stop-start,'second')
-    print(solution)
+    # solution=StarList(length*limit)
+    # start=timeit.default_timer()
+    # backTraceWithForward(solution,0,blocks)
+    # stop=timeit.default_timer()
+    # print('Time cost: ',stop-start,'second')
+    # print(solution)
 
 
 
-    # # Drawfield.drawGUI(blocks,solution.getSolutionList())
+    # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
 # main()
 # blocks=a
 main()
+
+print('-----------------neig test---------------')
+l=[1,4,10,31,41,50,91,98,100]
+for i in l:
+    print(i,getNeighbor(i,10))
