@@ -4,18 +4,19 @@ from Star import  StarList
 import Drawfield
 import timeit
 from copy import copy,deepcopy
+import random
 
 limit=2
 
 # fileName='10x10 puzzle-1.txt'
-fileName='14x14 p1.txt'
+# fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
 # fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
-# fileName='12x12 p1.txt'
+fileName='12x12 p1.txt'
 
 blocks=Read.getBlock(fileName)
 size=Read.getSize(blocks)
@@ -193,15 +194,21 @@ def backTraceWithH1(sol,r,block):
         # candidate=list(combinations(blockCopy[r],limit))
         minlength = 1000
         minIndex = -1
+        minArray = []
         for i in range(int(sol.getCount()/2),len(block)):
             if len(block[i]) < minlength:
                 minlength = len(block[i])
+                minArray = []
+                minArray.append(i)
                 minIndex = i
-        if r!=minIndex:
-            swapA = block[minIndex]
+            elif len(block[i])==minlength:
+                minArray.append(i)
+        newIndex = random.choice(minArray)
+        if r!=newIndex:
+            swapA = block[newIndex]
             swapB = block[r]
             block[r] = swapA
-            block[minIndex] = swapB
+            block[newIndex] = swapB
         candidate=[]
         for i in range(len(block[r])):
             for j in range(i+1,len(block[r])):
