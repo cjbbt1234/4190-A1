@@ -8,7 +8,7 @@ import random
 
 limit=2
 
-fileName='10x10 puzzle-1.txt'
+# fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
@@ -16,7 +16,7 @@ fileName='10x10 puzzle-1.txt'
 # fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
-# fileName='12x12 p1.txt'
+fileName='12x12 p1.txt'
 # fileName = "14x14 p2.txt"
 
 blocks=Read.getBlock(fileName)
@@ -269,8 +269,53 @@ def backTraceWithH2(sol,r,block):
     return result
 
 def backTraceHybrid(sol,r,block):
-    # Hybrid of H1 and H2
-    pass
+    result=None
+    if sol.getSize()==sol.getCount():
+        result=sol
+    else:
+        minlength = 1000
+        minIndex = -1
+        minArray = []
+        for i in range(int(sol.getCount()/2),len(block)):
+            if len(block[i]) < minlength:
+                minlength = len(block[i])
+                minArray = []
+                minArray.append(i)
+                minIndex = i
+            elif len(block[i])==minlength:
+                minArray.append(i)
+        newIndex = random.choice(minArray)
+        if r!=newIndex:
+            swapA = block[newIndex]
+            swapB = block[r]
+            block[r] = swapA
+            block[newIndex] = swapB
+        candidate=[]
+        for i in range(len(block[r])):
+            for j in range(i+1,len(block[r])):
+                candidate.append( (block[r][i],block[r][j]) )
+        candidate=sortCandidate(candidate,block,length,r)
+        for i in candidate:
+            indexA=r*limit
+            indexB=r*limit+1
+            (a,b)=i
+            blockA=searchBlockNum(block,a)
+            blockB=searchBlockNum(block,b)
+            sol.setStar(indexA,a,blockA)
+            sol.setStar(indexB,b,blockB)
+            if sol.localCheckAll(limit):
+                tempCopy=deepcopy2d(block)
+                removeNeighbor(a,tempCopy,length)
+                removeNeighbor(b,tempCopy,length)
+                removeColandRow(sol,tempCopy,length)
+                if checkRemainDomain(sol,tempCopy):
+                    temp=backTraceHybrid(sol,r+1,tempCopy)
+                    if temp is not None:
+                        result=temp
+                        break
+            sol.resetStar(indexA)
+            sol.resetStar(indexB)
+    return result
 
 
 def getNeighbor(p,length):
@@ -359,12 +404,21 @@ def main():
     solution=StarList(length*limit)
 
     start=timeit.default_timer()
-    backTraceWithH2(solution,0,blocks)
+    backTraceHybrid(solution,0,blocks)
     stop=timeit.default_timer()
     print('Time cost: ',stop-start,'second')
 
     print(solution)
-    Drawfield.drawGUI(blocks,solution.getSolutionList())
+    # Drawfield.drawGUI(blocks,solution.getSolutionList())
+
+    solution=StarList(length*limit)
+    start=timeit.default_timer()
+    backTraceWithH1(solution,0,blocks)
+    stop=timeit.default_timer()
+    print('Time cost: ',stop-start,'second')
+
+    print(solution)
+    # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
     # solution=StarList(length*limit)
     # start=timeit.default_timer()
