@@ -61,9 +61,9 @@ def drawGUI(array,solution):
         subarray=array[x]
         for y in subarray:
             if y in solution:
-                Label (window,bg=COLORS[x-1],relief=GROOVE,text=star,width=5*2,height=3*2) .grid(row=int((y-1)/len(array)),column=(y-1)%len(array) )
+                Label (window,bg=COLORS[x-1],relief=GROOVE,text=star,width=5,height=3) .grid(row=int((y-1)/len(array)),column=(y-1)%len(array) )
             else:
-                Label (window,bg=COLORS[x-1],relief=GROOVE,width=5*2,height=3*2) .grid(row=int((y-1)/len(array)),column=(y-1)%len(array) )
+                Label (window,bg=COLORS[x-1],relief=GROOVE,width=5,height=3) .grid(row=int((y-1)/len(array)),column=(y-1)%len(array) )
     window.mainloop()
 
 temp=createField(length,length)

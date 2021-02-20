@@ -8,13 +8,13 @@ from copy import copy,deepcopy
 limit=2
 
 # fileName='10x10 puzzle-1.txt'
-# fileName='14x14 p1.txt'
+fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
 # fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
-fileName='10x10;2;32;18.txt'
+# fileName='10x10;2;32;18.txt'
 # fileName='12x12 p1.txt'
 
 blocks=Read.getBlock(fileName)
@@ -215,6 +215,6 @@ def main():
     # print('Time cost: ',stop-start,'second')
     # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
-main()
-# blocks=a
 # main()
+blocks=a
+main()
