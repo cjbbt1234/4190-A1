@@ -7,11 +7,11 @@ from copy import copy,deepcopy
 
 limit=2
 
-# fileName='10x10 puzzle-1.txt'
+fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
-fileName = '11x11 p1.txt'
+# fileName = '11x11 p1.txt'
 # fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
@@ -81,7 +81,34 @@ def removeNeighbor(index, block, length):
                 j.remove(i)
     return block
 
-
+def removeColandRow(sol,block,length):
+    # sol=StarList(sol)#ready to remove
+    rowCount=[]
+    colCount=[]
+    for i in range(length):
+        rowCount.append(0)
+        colCount.append(0)
+    for index in range(sol.getCount()):
+        star=sol.getStar(index)
+        pos=star.getPosition()
+        row=int((pos-1)/length)
+        col=int((pos-1)%length)
+        rowCount[row]+=1
+        colCount[col]+=1
+    for i in range(length):
+        if(rowCount[i]==2):
+            elements=list( range(i*length+1,i*length+length+1) )
+            for j in elements:
+                for l in block:
+                    if j in l:
+                        l.remove(j)
+    for i in range(length):
+        if(colCount[i]==2):
+            elements=list( range(i+1,length*length+1,length) )
+            for j in elements:
+                for l in block:
+                    if j in l:
+                        l.remove(j)
 
 def deepcopy2d(block):
     result=[]
@@ -121,6 +148,7 @@ def backTraceWithForward(sol,r,block):
                 tempCopy=deepcopy2d(block)
                 removeNeighbor(a,tempCopy,length)
                 removeNeighbor(b,tempCopy,length)
+                removeColandRow(sol,tempCopy,length)
                 temp=backTraceWithForward(sol,r+1,tempCopy)
                 if temp is not None:
                     result=temp
