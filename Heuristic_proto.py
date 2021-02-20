@@ -11,8 +11,8 @@ limit=2
 # fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
-# fileName = '11x11 p1.txt'
-fileName = '10x10 p2.txt'
+fileName = '11x11 p1.txt'
+# fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
 # fileName='12x12 p1.txt'
@@ -81,6 +81,8 @@ def removeNeighbor(index, block, length):
                 j.remove(i)
     return block
 
+
+
 def deepcopy2d(block):
     result=[]
     for i in block:
@@ -138,13 +140,13 @@ def main():
     print('Time cost: ',stop-start,'second')
 
     print(solution)
+    Drawfield.drawGUI(blocks,solution.getSolutionList())
 
-
-    solution=StarList(length*limit)
-    start=timeit.default_timer()
-    backTrace(solution,0)
-    stop=timeit.default_timer()
-    print('Time cost: ',stop-start,'second')
+    # solution=StarList(length*limit)
+    # start=timeit.default_timer()
+    # backTrace(solution,0)
+    # stop=timeit.default_timer()
+    # print('Time cost: ',stop-start,'second')
     # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
 main()

@@ -203,20 +203,7 @@ class StarList:
         #     print("self.localRowCheck(limit) false")
         return self.localNeighborCheck() and self.localBlockCheck(limit) and self.localColCheck(limit) and self.localRowCheck(limit)
 
-def extendedArray(size):
-    s=size+2
-    array=[]
-    for i in range(s):
-        subA=[]
-        for j in range(s):
 
-            if(i!=0 and j!=0 and i!=s-1 and j!=s-1):
-                subA.append(str((i-1)*size+j).zfill(2))
-            else:
-                subA.append('00')
-        print(subA)
-
-extendedArray(10)
 a=StarList(20)
 # a.addStar(Star(2,0))
 # a.addStar(Star(8,1))
