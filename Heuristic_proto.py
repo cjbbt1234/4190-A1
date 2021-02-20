@@ -9,10 +9,10 @@ limit=2
 
 # fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
-fileName='8x8 p1.txt'
+# fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
-# fileName = '10x10 p2.txt'
+fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
 # fileName='12x12 p1.txt'
@@ -35,10 +35,6 @@ def deepCopyTest():
     print(blocks)
     return b
 
-# b=deepCopyTest()
-# blocks[1][0]=999999
-# print('--------------\n',blocks)
-# print(b)
 
 
 def searchBlockNum(b,p):
@@ -72,13 +68,13 @@ def backTrace(sol,r):
     return result
 
 
-def removeNeighbor(index,block,size):
-    if index%size==1: #left edge
-        neig=[index-size,index-size+1,index+1,index+size,index+size+1]
-    elif index%size==0: #right edge
-        neig=[index-size,index-size-1,index-1,index+size,index+size-1]
+def removeNeighbor(index, block, length):
+    if index%length==1: #left edge
+        neig=[index - length, index - length + 1, index + 1, index + length, index + length + 1]
+    elif index%length==0: #right edge
+        neig=[index - length, index - length - 1, index - 1, index + length, index + length - 1]
     else:
-        neig=[index-size,index-size-1,index-1,index+size,index+size-1,index-size+1,index+1,index+size+1]
+        neig=[index - length, index - length - 1, index - 1, index + length, index + length - 1, index - length + 1, index + 1, index + length + 1]
     for i in neig:
         for j in block:
             if i in j:
@@ -95,36 +91,35 @@ def deepcopy2d(block):
     return result
 
 def backTraceWithForward(sol,r,block):
-    blockCopy=deepcopy2d(block)
     result=None
     if sol.getSize()==sol.getCount():
         result=sol
     else:
-        print(blockCopy[r])
+        # print(blockCopy[r])
         # candidate=list(combinations(blockCopy[r],limit))
-
         candidate=[]
-        for i in range(len(blockCopy[r])):
-            for j in range(i+1,len(blockCopy[r])):
-                candidate.append( (blockCopy[r][i],blockCopy[r][j]) )
+        for i in range(len(block[r])):
+            for j in range(i+1,len(block[r])):
+                candidate.append( (block[r][i],block[r][j]) )
 
         for i in candidate:
             indexA=r*limit
             indexB=r*limit+1
             (a,b)=i
-            blockA=searchBlockNum(blockCopy,a)
-            blockB=searchBlockNum(blockCopy,b)
-            if(blockA==None or blockB==None):
-                print(blockCopy[r])
-                print(candidate)
-                print(blockCopy,'<<<<<<<<<<<<<<<<<<<<<<<')
-                break
+            blockA=searchBlockNum(block,a)
+            blockB=searchBlockNum(block,b)
+            # if(blockA==None or blockB==None):
+            #     print(blockCopy[r])
+            #     print(candidate)
+            #     print(blockCopy,'<<<<<<<<<<<<<<<<<<<<<<<')
+            #     break
             sol.setStar(indexA,a,blockA)
             sol.setStar(indexB,b,blockB)
             if sol.localCheckAll(limit):
-                removeNeighbor(indexA,blockCopy,size)
-                removeNeighbor(indexB,blockCopy,size)
-                temp=backTraceWithForward(sol,r+1,blockCopy)
+                tempCopy=deepcopy2d(block)
+                removeNeighbor(a,tempCopy,length)
+                removeNeighbor(b,tempCopy,length)
+                temp=backTraceWithForward(sol,r+1,tempCopy)
                 if temp is not None:
                     result=temp
                     break
@@ -143,6 +138,13 @@ def main():
     print('Time cost: ',stop-start,'second')
 
     print(solution)
+
+
+    solution=StarList(length*limit)
+    start=timeit.default_timer()
+    backTrace(solution,0)
+    stop=timeit.default_timer()
+    print('Time cost: ',stop-start,'second')
     # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
 main()

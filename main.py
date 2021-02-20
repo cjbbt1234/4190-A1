@@ -6,7 +6,7 @@ import Drawfield
 
 
 limit=2
-fileName='10x10 puzzle-1.txt'
+# fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
