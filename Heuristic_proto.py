@@ -7,14 +7,14 @@ from copy import copy,deepcopy
 
 limit=2
 
-fileName='10x10 puzzle-1.txt'
+# fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
 # fileName = '11x11 p1.txt'
 # fileName = '10x10 p2.txt'
 # fileName='10x10 p3.txt'
-# fileName='10x10;2;32;18.txt'
+fileName='10x10;2;32;18.txt'
 # fileName='12x12 p1.txt'
 
 blocks=Read.getBlock(fileName)
@@ -110,6 +110,39 @@ def removeColandRow(sol,block,length):
                     if j in l:
                         l.remove(j)
 
+def checkRemainDomain(sol,block):
+    result = True
+    length = int(sol.getSize()/2)
+    UnSignBlock = sol.getCount()
+    for i in range(UnSignBlock, length):
+        domainCount = len(block[i])
+        if domainCount <=2:
+            result = False
+            break
+        elif domainCount >=5:
+            continue
+        else:
+            minValue = min(block[i])
+            currBlock = block[i]
+            if domainCount == 3:
+                if(minValue+1 in currBlock and (minValue+length in currBlock or minValue+length+1 in currBlock)):
+                    result = False
+                    break
+                elif(minValue+length in block[i] and (minValue+length-1 in currBlock or minValue+length+1 in currBlock)):
+                    result = False
+                    break
+            elif domainCount == 4:
+                if(minValue+1 in currBlock and minValue+length in currBlock and minValue+length+1 in currBlock):
+                    result = False
+                    break
+    return result
+
+
+
+
+
+
+
 def deepcopy2d(block):
     result=[]
     for i in block:
@@ -149,10 +182,15 @@ def backTraceWithForward(sol,r,block):
                 removeNeighbor(a,tempCopy,length)
                 removeNeighbor(b,tempCopy,length)
                 removeColandRow(sol,tempCopy,length)
-                temp=backTraceWithForward(sol,r+1,tempCopy)
-                if temp is not None:
-                    result=temp
-                    break
+                if checkRemainDomain(sol,tempCopy):
+                    temp=backTraceWithForward(sol,r+1,tempCopy)
+                    if temp is not None:
+                        result=temp
+                        break
+                # temp=backTraceWithForward(sol,r+1,tempCopy)
+                # if temp is not None:
+                #     result=temp
+                #     break
             sol.resetStar(indexA)
             sol.resetStar(indexB)
     return result
