@@ -52,7 +52,6 @@ def printField(array):
 def drawGUI(array,solution):
     window=Tk()
     window.title("StarBattle")
-    load=PhotoImage(file='pT78o6pec.gif')
     star='\u2605'
     window.geometry('1920x1080')
     # frame=Frame(window,relief=RAISED,borderwidth=2)
