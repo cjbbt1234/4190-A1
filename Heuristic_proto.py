@@ -8,7 +8,7 @@ import random
 
 limit=2
 
-# fileName='10x10 puzzle-1.txt'
+fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
 fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
@@ -17,7 +17,7 @@ fileName='8x8 p1.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
 # fileName='12x12 p1.txt'
-# fileName = "14x14 p2.txt"
+fileName = "14x14 p2.txt"
 # fileName='14x14 p3.txt'
 
 blocks=Read.getBlock(fileName)
@@ -432,7 +432,7 @@ def main():
 
     # # Drawfield.drawGUI(blocks,solution.getSolutionList())
 
-main()
+# main()
 # blocks=a
 # main()
 #
@@ -440,3 +440,31 @@ main()
 # l=[1,4,12,37,39,12,48,133,138,144]
 # for i in l:
 #     print(i, set(getNeighbor(i,12)))
+
+
+# import BattleGen
+#
+# def testGen():
+#     solution=StarList(length*limit)
+#
+#     blocks=BattleGen.BattleGen().genMap(8)
+#     # blocks=Read.getBlock(fileName)
+#     print (blocks)
+#
+#     start=timeit.default_timer()
+#     backTraceHybrid(solution,0,blocks)
+#     stop=timeit.default_timer()
+#     print('Time cost: ',stop-start,'second')
+#
+#     print(solution)
+#     Drawfield.drawGUI(blocks,solution.getSolutionList())
+#
+#     solution=StarList(length*limit)
+#     start=timeit.default_timer()
+#     backTraceWithH1(solution,0,blocks)
+#     stop=timeit.default_timer()
+#     print('Time cost: ',stop-start,'second')
+#
+#     print(solution)
+#
+# testGen()

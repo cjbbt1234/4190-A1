@@ -43,8 +43,10 @@ class BattleGen:
             points.remove(seed)
             lists.append(temp)
         while(len(points)!=0):
-            if(random.random()>0.9):
+            if(random.random()>.15):#0.85 for 10*10
                 group=lists[int(random.random()*len(lists))]
+                # if(len(group)>length*1.7 and random.random()>0.65):
+                #     continue
             else:
                 group=sorted(lists,key=len)[0]
             index=int(random.random()*len(group))
@@ -70,8 +72,21 @@ def testGen():
         arrays.append(testArray)
         print(i,'-->',testArray)
 
-
-
+c=0
+for i in range(10):
+    print(i)
+    t=BattleGen()
+    array=t.genMap(14)
+    # print(array)
+    solution=StarList(14*2)
+    res=Heuristic_proto.backTraceHybrid(solution,0,array)
+    if res is not None:
+        if(random.random()>0.9):
+            # Drawfield.drawGUI(array,res.getSolutionList())
+            pass
+        # print(solution)
+        c+=1
+print(c)
 #
 # while(len(points)!=0):
 #     print(len(points))
