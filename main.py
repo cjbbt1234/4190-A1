@@ -3,12 +3,14 @@ import Read
 import Star
 from Star import StarList
 import Drawfield
+from Heuristic_proto import *
 
 
 limit=2
 # fileName='10x10 puzzle-1.txt'
-# fileName='14x14 p1.txt'
+fileName='14x14 p1.txt'
 # fileName='8x8 p1.txt'
+# fileName='12x12 p1.txt'
 # fileName = '10x10 non-solution.txt'
 blocks=Read.getBlock(fileName)
 size=Read.getSize(blocks)
@@ -100,15 +102,59 @@ def backTrace(sol,r):
 #             sol.resetStar(indexTwo)
 import time
 
-tic=time.perf_counter()
-backTrace(solution,0)
-if(solution.getCount()!=solution.getSize()):
-    print("No solution")
-else:
+# tic=time.perf_counter()
+# backTrace(solution,0)
+# if(solution.getCount()!=solution.getSize()):
+#     print("No solution")
+# else:
+#     print(solution)
+# # print('end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program ')
+# toc=time.perf_counter()
+# print(f"Downloaded the tutorial in {toc - tic:0.4f} seconds")
+
+def solvepuzzle(solution,k,blocks):
+    s=StarList(length*limit)
+
+    start=timeit.default_timer()
+
+    solution=backTrace(s,0)
+    stop=timeit.default_timer()
+    print('Time cost: ',stop-start,'second')
+
     print(solution)
-# print('end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program end of program ')
-toc=time.perf_counter()
-print(f"Downloaded the tutorial in {toc - tic:0.4f} seconds")
+
+def timefuction(solution,k,blocks):
+    solution=StarList(length*limit)
+
+    start=timeit.default_timer()
+
+
+    # Start bar as a process
+    p = multiprocessing.Process(target=solvepuzzle,args=(solution,0,blocks,))
+    p.start()
+
+    # Wait for 10 seconds or until process finishes
+    p.join(3)
+
+    # If thread is still active
+    if p.is_alive():
+        print("running... let's kill it...No solution")
+
+        # Terminate - may not work if process is stuck for good
+        # p.terminate()
+        # OR Kill - will work for sure, no chance for process to finish nicely however
+        p.kill()
+
+        p.join()
+
+import multiprocessing
+import time
+
+if __name__ == '__main__':
+    timefuction(solution,0,blocks)
+
+
+
 
 
 

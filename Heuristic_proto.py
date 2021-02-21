@@ -6,9 +6,10 @@ import timeit
 from copy import copy,deepcopy
 import random
 
+
 limit=2
 
-fileName='10x10 puzzle-1.txt'
+# fileName='10x10 puzzle-1.txt'
 # fileName='14x14 p1.txt'
 fileName='8x8 p1.txt'
 # fileName = '10x10 non-solution.txt'
@@ -17,7 +18,7 @@ fileName='8x8 p1.txt'
 # fileName='10x10 p3.txt'
 # fileName='10x10;2;32;18.txt'
 # fileName='12x12 p1.txt'
-fileName = "14x14 p2.txt"
+# fileName = "14x14 p2.txt"
 # fileName='14x14 p3.txt'
 
 blocks=Read.getBlock(fileName)
@@ -405,6 +406,7 @@ def main():
     solution=StarList(length*limit)
 
     start=timeit.default_timer()
+
     backTraceHybrid(solution,0,blocks)
     stop=timeit.default_timer()
     print('Time cost: ',stop-start,'second')
@@ -468,3 +470,7 @@ def main():
 #     print(solution)
 #
 # testGen()
+
+
+
+
