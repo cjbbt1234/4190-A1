@@ -8,8 +8,8 @@ from Heuristic_proto import *
 
 limit=2
 # fileName='10x10 puzzle-1.txt'
-fileName='14x14 p1.txt'
-# fileName='8x8 p1.txt'
+# fileName='14x14 p1.txt'
+fileName='8x8 p1.txt'
 # fileName='12x12 p1.txt'
 # fileName = '10x10 non-solution.txt'
 blocks=Read.getBlock(fileName)
@@ -122,6 +122,7 @@ def solvepuzzle(solution,k,blocks):
     print('Time cost: ',stop-start,'second')
 
     print(solution)
+    Drawfield.drawGUI(blocks,solution.getSolutionList())
 
 def timefuction(solution,k,blocks):
     solution=StarList(length*limit)
@@ -130,22 +131,25 @@ def timefuction(solution,k,blocks):
 
 
     # Start bar as a process
-    p = multiprocessing.Process(target=solvepuzzle,args=(solution,0,blocks,))
-    p.start()
+    p1 = multiprocessing.Process(target=solvepuzzle,args=(solution,0,blocks,))
+    p2 = multiprocessing.Process(target=solvepuzzle,args=(StarList(length*limit),0,[[49, 57, 41, 58, 50, 42, 33], [32, 31, 30, 38, 22, 39, 29, 47, 37, 40], [60, 59, 52, 44, 53, 61, 45, 51], [26, 34, 18, 35, 43, 27, 25, 36], [24, 16, 8, 23, 15, 14, 6, 7], [21, 13, 20, 12, 28, 4, 5], [9, 10, 2, 11, 17, 1, 19, 3], [63, 62, 64, 56, 54, 55, 46, 48]],))
+    p1.start()
+    p2.start()
 
     # Wait for 10 seconds or until process finishes
-    p.join(3)
+    p1.join(3)
+    p2.join(3)
 
     # If thread is still active
-    if p.is_alive():
+    if p1.is_alive():
         print("running... let's kill it...No solution")
 
         # Terminate - may not work if process is stuck for good
         # p.terminate()
         # OR Kill - will work for sure, no chance for process to finish nicely however
-        p.kill()
+        p1.kill()
 
-        p.join()
+        p1.join()
 
 import multiprocessing
 import time
